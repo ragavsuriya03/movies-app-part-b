@@ -1,29 +1,37 @@
-.header{
-    background-color: #222;
-    height:36px;
-    padding: 8px 32px 8px 16px ;
+.header {
+  background: #222;
+  height: 36px;
+  padding: 8px 32px 8px 16px ;
+ }
 
+ .App-logo{
+  background:#ff7f7f;
+  position: relative;
+  float: left;
+  width: 15px;
+  height: 35px;
+ }
+
+ .login-button {
+  float: right;
 }
 
-.App-logo{
-    background:#ff7f7f;
-    position: relative;
-    float: left;
-    width: 17px;
-    height: 35px;
-   }
+.booknow-button {
+  float: right;
+  margin-right: 20px;
+}
 
-   @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-rotate 8s infinite linear;
-    }
+ @media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 8s linear;
   }
+}
 
-  @keyframes App-logo-rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}
