@@ -1,92 +1,77 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Header from '../../common/header/Header';
-import './Home.css';
+import React, { Component } from "react";
+import "./Home.css";
+import Header from "../../common/header/Header";
+import { withStyles } from "@material-ui/core/styles";
+import moviesData from "../../assets/moviesData";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
+import genres from "../../assets/genre";
+import artists from "../../assets/artists";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import FormControl from "@material-ui/core/FormControl";
+import Typography from "@material-ui/core/Typography";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import Checkbox from "@material-ui/core/Checkbox";
+import ListItemText from "@material-ui/core/ListItemText";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
-import { withStyles } from '@material-ui/core/styles';
-
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-
-import moviesData from '../../common/moviesData.js';
-
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Checkbox from '@material-ui/core/Checkbox';
-import ListItemText from '@material-ui/core/ListItemText';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import artists from "../../common/artists";
-import genres from '../../common/genre';
-import Details from '../details/Details'
-
-
-const styles = theme => ({
-    root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
-    },
-    upcomingMoviesHeading: {
-        textAlign: 'center',
-        background: '#ff9999',
-        padding: '8px',
-        fontSize: '1rem'
-    },
-    gridListUpcomingMovies: {
-        flexWrap: 'nowrap',
-        transform: 'translateZ(0)',
-        width: '100%'
-    },
-    gridListMain: {
-        transform: 'translateZ(0)',
-        cursor: 'pointer',
-        margin: '0%'
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 240,
-        maxWidth: 240
-    },
-    title: {
-        color: theme.palette.primary.light,
-    },
+const styles = (theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+  upcomingMoviesHeading: {
+    textAlign: "center",
+    background: "#ff9999",
+    padding: "8px",
+    fontSize: "1rem",
+  },
+  gridListUpcomingMovies: {
+    flexWrap: "nowrap",
+    transform: "translateZ(0)",
+    width: "100%",
+  },
+  gridListMain: {
+    transform: "translateZ(0)",
+    cursor: "pointer",
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 240,
+    maxWidth: 240,
+  },
+  title: {
+    color: theme.palette.primary.light,
+  },
 });
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      movieName: "",
+      genres: [],
+      artists: [],
+    };
+  }
     
-    constructor() {
-        super();
-        this.state = {
-            movieName: "",
-            upcomingMovies: [],
-            releasedMovies: [],
-            genres: [],
-            artists: [],
-            genresList: genres,
-            artistsList: artists,
-            releaseDateStart: "",
-            releaseDateEnd: ""
-        }
-    }
+    movieNameChangeHandler = (event) => {
+        this.setState({ movieName: event.target.value });
+    };
+
+    genreSelectHandler = (event) => {
+        this.setState({ genres: event.target.value });
+      };
     
-    movieNameChangeHandler = event => {
-      this.setState({ movieName: event.target.value });
-    }
-
-    genreSelectHandler = event => {
-      this.setState({ genres: event.target.value });
-    }
-
-    artistSelectHandler = event => {
-      this.setState({ artists: event.target.value });
-    }
+    artistSelectHandler = (event) => {
+    this.setState({ artists: event.target.value });
+    };
 
     releaseDateStartHandler = event => {
       this.setState({ releaseDateStart: event.target.value });
@@ -97,20 +82,21 @@ class Home extends Component {
     }
 
     movieClickHandler = (movieId) => {
-        ReactDOM.render(<Details movieId={movieId} />, document.getElementById('root'));
-    }
-
-    render() {
+        this.props.history.push("/movie/" + movieId);
+      };
+    
+      render() {
         const { classes } = this.props;
-        
-        var filterMovie=moviesData.filter((movie)=>{
-        return(movie.title === this.state.movieName 
-            || this.state.artists.includes( 
-                (movie.artists[0].first_name+" "+movie.artists[0].last_name)
-            ))
+        var filterMovie = moviesData.filter((movie) => {
+          return (
+            movie.title === this.state.movieName ||
+            this.state.artists.includes(
+              movie.artists[0].first_name + " " + movie.artists[0].last_name
+            )
+          );
         });
-        if(this.state.movieName.length === 0  && this.state.artists.length === 0){
-          filterMovie=moviesData;
+        if (this.state.movieName.length === 0 && this.state.artists.length === 0) {
+          filterMovie = moviesData;
         }
 
         return (
