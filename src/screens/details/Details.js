@@ -25,7 +25,7 @@ useEffect(()=>{
             return mov.id === props.match.params.id
         })[0] ; 
     setState(filterMovie);
-},[])
+},[]);
 
 
 const  artistClickHandler = (url) => {
